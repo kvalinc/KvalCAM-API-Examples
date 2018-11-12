@@ -43,7 +43,7 @@ namespace IO.Swagger.Model
         /// <param name="DiameterMaximum">Maximum allowed diameter for the face circle, if machine/tools unable to produce target diameter then this is the maximum acceptable diameter.</param>
         /// <param name="DepthClosestToRef">Depth closest to the T-axis reference.</param>
         /// <param name="DepthFurthestFromRef">Depth furthest from the T-axis reference.</param>
-        public FaceCircle(string Diameter = default(string), string DiameterMinimum = default(string), string DiameterMaximum = default(string), string DepthClosestToRef = default(string), string DepthFurthestFromRef = default(string), string Name = default(string), string Description = default(string), string TLocation = default(string), string WLocation = default(string), string LLocation = default(string), DoorSideEnum? DoorSide = default(DoorSideEnum?), List<AbstractFeature> Children = default(List<AbstractFeature>), string Type = "Circle") : base(Name, Description, TLocation, WLocation, LLocation, DoorSide, Children, Type)
+        public FaceCircle(string Diameter = default(string), string DiameterMinimum = default(string), string DiameterMaximum = default(string), string DepthClosestToRef = default(string), string DepthFurthestFromRef = default(string), string Name = default(string), string Description = default(string), string TLocation = default(string), string WLocation = default(string), string LLocation = default(string), DoorSideEnum? DoorSide = default(DoorSideEnum?), List<AbstractFeature> Children = default(List<AbstractFeature>)) : base(Name, Description, TLocation, WLocation, LLocation, DoorSide, Children, "FaceCircle")
         {
             this.Diameter = Diameter;
             this.DiameterMinimum = DiameterMinimum;

@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:KvalCAMAPIClient"
         mc:Ignorable="d"
         Title="MainWindow"
-        Height="450"
-        Width="800">
+        Height="480"
+        Width="640">
     <Window.Resources>
         <Style TargetType="TextBox">
             <Setter Property="VerticalAlignment"
@@ -28,41 +28,93 @@
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
-            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="300" />
         </Grid.RowDefinitions>
-
-        <Grid Grid.Row="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"></RowDefinition>
-                <RowDefinition Height="auto"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-            </Grid.RowDefinitions>
+        <TabControl Grid.Row="0">
+            <TabItem Header="Load By Name">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0"
+                                   Grid.Column="0"
+                                   VerticalAlignment="Top"
+                                   Text="Door Job Name:" />
+                        <TextBox Name="JobNameTextBox"
+                                 Grid.Row="0"
+                                 Grid.Column="1"
+                                 VerticalAlignment="Top"
+                                 HorizontalAlignment="Left"
+                                 Text="job123" />
+                        <Button x:Name="LoadNamedButton"
+                                Grid.Row="0"
+                                Grid.Column="2"
+                                VerticalAlignment="Top"
+                                Height="40"
+                                Width="120"
+                                Margin="2"
+                                Content="Load Into Editor"
+                                Click="LoadNamedButton_Click"></Button>
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Load From Code">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <Button x:Name="LoadCodeCreatedJobButton"
+                            Height="40"
+                            Margin="2"
+                            Width="200"
+                            Content="Load Premade Into Editor"
+                            Click="LoadCodeCreatedJobButton_Click"></Button>
+                    <Button x:Name="LoadComposedJobButton"
+                            Grid.Row="1"
+                            Height="40"
+                            Margin="2"
+                            Width="200"
+                            Content="Load Composed Job Into Editor"
+                            Click="LoadComposedJobButton_Click"></Button>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Connection Settings">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="0"
+                               Text="Base Address:" />
+                    <TextBox Name="BaseAddressTextBox"
+                             Grid.Row="0"
+                             Grid.Column="1"
+                             Text="http://localhost:9707/rest/api/v1" />
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Row="0"
-                       Grid.Column="0"
-                       Text="Base Address:" />
-            <TextBox Name="BaseAddressTextBox"
-                     Grid.Row="0"
-                     Grid.Column="1"
-                     Text="http://localhost:9707/rest/api/v1" />
-            <TextBlock Grid.Row="1"
-                       Grid.Column="0"
-                       Text="Door Job Name:" />
-            <TextBox Name="JobNameTextBox"
-                     Grid.Row="1"
-                     Grid.Column="1"
-                     Text="job123" />
-            <TextBlock Grid.Row="2"
-                       Grid.Column="0"
+            <TextBlock Grid.Column="0"
                        VerticalAlignment="Top"
                        Text="Response:" />
             <TextBox Name="ResponseTextBox"
-                     Grid.Row="2"
                      Grid.Column="1"
                      Grid.ColumnSpan="2"
                      HorizontalAlignment="Stretch"
@@ -70,21 +122,5 @@
                      Width="NaN"
                      Text="" />
         </Grid>
-        <StackPanel Grid.Row="1"
-                    Orientation="Horizontal"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Bottom">
-            <Button x:Name="LoadPremadeButton"
-                    Height="40"
-                    Margin="2"
-                    Content="Load Premade Into Editor"
-                    Click="LoadPremadeButton_Click"></Button>
-            <Button x:Name="LoadNamedButton"
-                    Height="40"
-                    Margin="2"
-                    Content="Load Into Editor"
-                    Click="LoadNamedButton_Click"></Button>
-
-        </StackPanel>
     </Grid>
 </Window>

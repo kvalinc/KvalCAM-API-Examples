@@ -32,23 +32,15 @@ namespace KvalCAMAPIClient
         {
             try
             {
+                // Use the base path set for connecting using the API
                 var config = new Configuration { BasePath = BaseAddressTextBox.Text };
-                var doorJobsApi = new DoorJobsApi(config);
 
-                var result = doorJobsApi.RestApiV1DoorjobsSearchPost(new SearchDoorJobsParameters(Name: JobNameTextBox.Text));
+                // Get the job
+                var result = GetDoorJobByName(JobNameTextBox.Text, config);
 
-                if (result.Results == null || result.Results.Count == 0)
-                {
-                    throw new Exception("Door job with name given not found");
-                }
-
-                if (result.Results.Count > 1)
-                {
-                    throw new Exception($"Multiple jobs ({result.Results.Count}) with the same name were found");
-                }
-
+                // Load the job into the editor
                 var editorApi = new EditorApi(config);
-                editorApi.RestApiV1EditorDoorjobPut(new LoadDoorJobIntoEditorParameters(Id: result.Results.First().Id));
+                editorApi.RestApiV1EditorDoorjobPut(new LoadDoorJobIntoEditorParameters(Id: result.Id));
 
                 ResponseTextBox.Text = "Sucesss";
             }
@@ -58,11 +50,16 @@ namespace KvalCAMAPIClient
             }
         }
 
-        private void LoadPremadeButton_Click(object sender, RoutedEventArgs e)
+        private void LoadCodeCreatedJobButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
+                // Use the base path set for connecting using the API
                 var config = new Configuration { BasePath = BaseAddressTextBox.Text };
+
+                // Creating a job purely from code
+                // NOTE: Any property not set will be left blank when loaded into KvalCAM
+
                 var job = new DoorJob
                 {
                     Name = "Job1",
@@ -97,6 +94,7 @@ namespace KvalCAMAPIClient
                     }
                 };
 
+                // Load the job into the editor
                 var editorApi = new EditorApi(config);
                 var parameters = new UploadDoorJobIntoEditorParameters(job);
                 editorApi.RestApiV1EditorDoorjobUploadPut(parameters);
@@ -107,6 +105,87 @@ namespace KvalCAMAPIClient
             {
                 ResponseTextBox.Text = $"Error: {ex.Message}";
             }
+        }
+
+        // Gets a feature group from the library by name using the search API call
+        private FeatureGroup GetFeatureGroupByName(string name, Configuration config)
+        {
+            var featureGroupsApi = new FeatureGroupsApi(config);
+
+            var result = featureGroupsApi.RestApiV1FeaturegroupsSearchPost(new SearchFeatureGroupsParameters(Name: name));
+
+            if (result.Results == null || result.Results.Count == 0)
+            {
+                throw new Exception($"FeatureGroup with name \"{name}\" not found");
+            }
+
+            if (result.Results.Count > 1)
+            {
+                throw new Exception($"Multiple feature groups with the name \"{name}\" were found");
+            }
+
+            return result.Results.First();
+        }
+
+        // Gets a door job from the library by name using the search API call
+        private DoorJob GetDoorJobByName(string name, Configuration config)
+        {
+            var doorJobsApi = new DoorJobsApi(config);
+            var result = doorJobsApi.RestApiV1DoorjobsSearchPost(new SearchDoorJobsParameters(Name: name));
+
+            if (result.Results == null || result.Results.Count == 0)
+            {
+                throw new Exception($"DoorJob with name \"{name}\" not found");
+            }
+
+            if (result.Results.Count > 1)
+            {
+                throw new Exception($"Multiple door jobs with the name \"{name}\" were found");
+            }
+
+            return result.Results.First();
+        }
+
+        private void LoadComposedJobButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // Use the base path set for connecting using the API
+                var config = new Configuration { BasePath = BaseAddressTextBox.Text };
+
+                // Creating a job by querying existing feature groups and attaching them to an existing job
+
+                // This is the door job name to be attached to (must exist in the job library)
+                var doorJobName = "DoorJob1";
+
+                // These are the feature group names to be attached to the job (must exist in the feature groups library)
+                var featureGroupNames = new List<string>
+                {
+                    "FeatureGroup1",
+                    "FeatureGroup2"
+                };
+
+                // Get the job
+                var job = GetDoorJobByName(doorJobName, config);
+
+                // Get the feature groups
+                var featureGroups = featureGroupNames.Select(name => GetFeatureGroupByName(name, config)).ToList();
+
+                // Set the feature groups on the job
+                job.FeatureGroups = featureGroups;
+
+                // Load the composed job into the editor
+                var editorApi = new EditorApi(config);
+                var parameters = new UploadDoorJobIntoEditorParameters(job);
+                editorApi.RestApiV1EditorDoorjobUploadPut(parameters);
+
+                ResponseTextBox.Text = "Sucesss";
+            }
+            catch (Exception ex)
+            {
+                ResponseTextBox.Text = $"Error: {ex.Message}";
+            }
+
         }
     }
 }

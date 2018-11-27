@@ -74,10 +74,16 @@
                     Orientation="Horizontal"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Bottom">
-            <Button Height="40"
+            <Button x:Name="LoadPremadeButton"
+                    Height="40"
+                    Margin="2"
+                    Content="Load Premade Into Editor"
+                    Click="LoadPremadeButton_Click"></Button>
+            <Button x:Name="LoadNamedButton"
+                    Height="40"
                     Margin="2"
                     Content="Load Into Editor"
-                    Click="Button_Click"></Button>
+                    Click="LoadNamedButton_Click"></Button>
 
         </StackPanel>
     </Grid>

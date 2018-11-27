@@ -28,7 +28,7 @@ namespace KvalCAMAPIClient
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void LoadNamedButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -42,8 +42,64 @@ namespace KvalCAMAPIClient
                     throw new Exception("Door job with name given not found");
                 }
 
+                if (result.Results.Count > 1)
+                {
+                    throw new Exception($"Multiple jobs ({result.Results.Count}) with the same name were found");
+                }
+
                 var editorApi = new EditorApi(config);
                 editorApi.RestApiV1EditorDoorjobPut(new LoadDoorJobIntoEditorParameters(Id: result.Results.First().Id));
+
+                ResponseTextBox.Text = "Sucesss";
+            }
+            catch (Exception ex)
+            {
+                ResponseTextBox.Text = $"Error: {ex.Message}";
+            }
+        }
+
+        private void LoadPremadeButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var config = new Configuration { BasePath = BaseAddressTextBox.Text };
+                var job = new DoorJob
+                {
+                    Name = "Job1",
+                    Description = "This is a job from the API",
+                    DoorData = new DoorData(Length: "80", Width: "36", Thickness: "1.5"),
+                    FeatureGroups = new List<FeatureGroup>
+                    {
+                        new FeatureGroup
+                        {
+                            Name = "Group1",
+                            Locations = new List<LWTLocation>
+                            {
+                                new LWTLocation(LLocation: "36", WLocation: "0", TLocation: "0"),
+                                new LWTLocation(LLocation: "45", WLocation: "0", TLocation: "0"),
+                            },
+
+                            Children = new List<AbstractFeature>
+                            {
+                                new Circle(
+                                    LLocation: "0",
+                                    WLocation: "0",
+                                    TLocation: "$door.thickness/2",
+                                    Bevel: "0",
+                                    Depth: "1",
+                                    Diameter: "3/4",
+                                    DiameterMinimum: "Diameter",
+                                    DiameterMaximum: "Diameter",
+                                    DepthMinimum: "Depth",
+                                    DepthMaximum: "Depth")
+                            }
+                        }
+                    }
+                };
+
+                var editorApi = new EditorApi(config);
+                var parameters = new UploadDoorJobIntoEditorParameters(job);
+                editorApi.RestApiV1EditorDoorjobUploadPut(parameters);
 
                 ResponseTextBox.Text = "Sucesss";
             }

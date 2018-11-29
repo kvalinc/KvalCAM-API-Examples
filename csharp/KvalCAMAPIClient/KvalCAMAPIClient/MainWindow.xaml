@@ -35,7 +35,7 @@
             <TabItem Header="Load By Name">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
                         <RowDefinition Height="auto"></RowDefinition>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
@@ -58,11 +58,43 @@
                                 Grid.Row="0"
                                 Grid.Column="2"
                                 VerticalAlignment="Top"
-                                Height="40"
+                                Height="30"
                                 Width="120"
                                 Margin="2"
                                 Content="Load Into Editor"
                                 Click="LoadNamedButton_Click"></Button>
+                    </Grid>
+                    <Grid Grid.Row="1" HorizontalAlignment="Left">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0"
+                                   Grid.Column="0"
+                                   VerticalAlignment="Top"
+                                   Text="Listen to Serial Port: " />
+                        <CheckBox Name="ListenToSerialPortCheckBox"
+                                  Grid.Row="0"
+                                  Grid.Column="1"
+                                  VerticalAlignment="Center"
+                                  HorizontalAlignment="Left" 
+                                  Checked="ListenToSerialPortCheckBox_Checked"/>
+                        <TextBlock Grid.Row="1"
+                                   Grid.Column="0"
+                                   VerticalAlignment="Top"
+                                   Text="COM Port: " />
+                        <TextBox Name="COMPortTextBox"
+                                 Grid.Row="1"
+                                 Grid.Column="1"
+                                 VerticalAlignment="Top"
+                                 HorizontalAlignment="Left"
+                                 Text="COM3"
+                                 TextChanged="COMPortTextBox_TextChanged"/>
+
                     </Grid>
                 </Grid>
             </TabItem>

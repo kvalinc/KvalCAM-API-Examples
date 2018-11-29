@@ -3,6 +3,7 @@ using IO.Swagger.Client;
 using IO.Swagger.Model;
 using System;
 using System.Collections.Generic;
+using System.IO.Ports;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,6 +27,8 @@ namespace KvalCAMAPIClient
         public MainWindow()
         {
             InitializeComponent();
+            _serialPort = new SerialPort();
+            _serialPort.DataReceived += SerialPort_DataReceived;
         }
 
         private void LoadNamedButton_Click(object sender, RoutedEventArgs e)
@@ -42,7 +45,7 @@ namespace KvalCAMAPIClient
                 var editorApi = new EditorApi(config);
                 editorApi.RestApiV1EditorDoorjobPut(new LoadDoorJobIntoEditorParameters(Id: result.Id));
 
-                ResponseTextBox.Text = "Sucesss";
+                ResponseTextBox.Text = $"Success, loaded job: {JobNameTextBox.Text}";
             }
             catch (Exception ex)
             {
@@ -99,7 +102,7 @@ namespace KvalCAMAPIClient
                 var parameters = new UploadDoorJobIntoEditorParameters(job);
                 editorApi.RestApiV1EditorDoorjobUploadPut(parameters);
 
-                ResponseTextBox.Text = "Sucesss";
+                ResponseTextBox.Text = "Sucessfully loaded job created in code";
             }
             catch (Exception ex)
             {
@@ -179,13 +182,103 @@ namespace KvalCAMAPIClient
                 var parameters = new UploadDoorJobIntoEditorParameters(job);
                 editorApi.RestApiV1EditorDoorjobUploadPut(parameters);
 
-                ResponseTextBox.Text = "Sucesss";
+                var responseSb = new StringBuilder();
+                responseSb.AppendLine($"Sucessfully loaded job: {doorJobName} with the following feature groups attached:");
+
+                foreach (var fgName in featureGroupNames)
+                {
+                    responseSb.AppendLine(fgName);
+                }
+
+                ResponseTextBox.Text = responseSb.ToString();
             }
             catch (Exception ex)
             {
                 ResponseTextBox.Text = $"Error: {ex.Message}";
             }
 
+        }
+
+        private readonly SerialPort _serialPort;
+        private void ListenToSerialPortCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            var responseSb = new StringBuilder();
+            try
+            {
+                if (_serialPort.IsOpen)
+                {
+                    _serialPort.Close();
+                }
+
+
+                if (ListenToSerialPortCheckBox.IsChecked.HasValue && ListenToSerialPortCheckBox.IsChecked.Value)
+                {
+                    responseSb.AppendLine("Attemping to listen to serial port...");
+                    responseSb.AppendLine("Port names found:");
+                    foreach (var portName in SerialPort.GetPortNames())
+                    {
+                        responseSb.AppendLine(portName);
+                    }
+
+                    var baudRate = 9600;
+                    responseSb.AppendLine($"Listening to port with baud rate: {baudRate}, port name: {COMPortTextBox.Text}");
+                    _serialPort.PortName = COMPortTextBox.Text;
+                    _serialPort.BaudRate = 9600;
+                    _serialPort.ReadTimeout = 1000;
+                    _serialPort.Open();
+                }
+                else
+                {
+                    responseSb.AppendLine("Stopped listening to serial port");
+                }
+
+                ResponseTextBox.Text = responseSb.ToString();
+
+            }
+            catch (Exception ex)
+            {
+                responseSb.AppendLine($"Error: {ex.Message}");
+                ResponseTextBox.Text = responseSb.ToString();
+            }
+
+        }
+
+        private void COMPortTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ListenToSerialPortCheckBox.IsChecked = false;
+        }
+
+        private void SerialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
+        {
+            try
+            {
+                var input = _serialPort.ReadLine().Trim();
+
+                Dispatcher.BeginInvoke((Action)(() =>
+                {
+                    try
+                    {
+                        var config = new Configuration { BasePath = BaseAddressTextBox.Text };
+                        var job = GetDoorJobByName(input, config);
+
+                        var editorApi = new EditorApi(config);
+                        var parameters = new UploadDoorJobIntoEditorParameters(job);
+                        editorApi.RestApiV1EditorDoorjobUploadPut(parameters);
+
+                        ResponseTextBox.Text = $"Loaded job: {input} from serial port read";
+                    }
+                    catch (Exception ex)
+                    {
+
+                        ResponseTextBox.Text = $"Error: {ex.Message}";
+                    }
+                }
+            ));
+            }
+            catch (TimeoutException)
+            {
+                Dispatcher.BeginInvoke((Action)(() => ResponseTextBox.Text = "Serial port read timed out!"));
+            }
         }
     }
 }

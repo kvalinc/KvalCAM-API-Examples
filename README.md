@@ -14,7 +14,7 @@ The CSharp example is mostly code generated from the swagger doc schema and has 
 * Listening to a serial port COM channel to load a door job by name into the KvalCAM editor (serial port is commonly used by barcode and QR code readers)
 
 ## Python Example
-The python code shows some simple HTTP JSON requests utilizing the python standard libraries.
+The python code shows some simple HTTP JSON requests to the API utilizing the python standard libraries.
 
 # Links
 [Kval Website](https://www.kvalinc.com/)

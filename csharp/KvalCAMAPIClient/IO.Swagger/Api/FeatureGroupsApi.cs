@@ -68,7 +68,7 @@ namespace IO.Swagger.Api
         /// Inserts or updates a feature group in the feature group library
         /// </summary>
         /// <remarks>
-        /// The id given is used to determine whether to perform an insert or an update, if the id already exists then an update is performed, otherwise the feature group is inserted
+        /// The id given is used to determine whether to perform an insert or an update, if the id already exists then an update is performed, otherwise the feature group is inserted. If no id is given or the id is all zeroes then no action is performed and a BadRequest (status 400) response is returned
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="parameters"> (optional)</param>
@@ -79,7 +79,7 @@ namespace IO.Swagger.Api
         /// Inserts or updates a feature group in the feature group library
         /// </summary>
         /// <remarks>
-        /// The id given is used to determine whether to perform an insert or an update, if the id already exists then an update is performed, otherwise the feature group is inserted
+        /// The id given is used to determine whether to perform an insert or an update, if the id already exists then an update is performed, otherwise the feature group is inserted. If no id is given or the id is all zeroes then no action is performed and a BadRequest (status 400) response is returned
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="parameters"> (optional)</param>
@@ -152,7 +152,7 @@ namespace IO.Swagger.Api
         /// Inserts or updates a feature group in the feature group library
         /// </summary>
         /// <remarks>
-        /// The id given is used to determine whether to perform an insert or an update, if the id already exists then an update is performed, otherwise the feature group is inserted
+        /// The id given is used to determine whether to perform an insert or an update, if the id already exists then an update is performed, otherwise the feature group is inserted. If no id is given or the id is all zeroes then no action is performed and a BadRequest (status 400) response is returned
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="parameters"> (optional)</param>
@@ -163,7 +163,7 @@ namespace IO.Swagger.Api
         /// Inserts or updates a feature group in the feature group library
         /// </summary>
         /// <remarks>
-        /// The id given is used to determine whether to perform an insert or an update, if the id already exists then an update is performed, otherwise the feature group is inserted
+        /// The id given is used to determine whether to perform an insert or an update, if the id already exists then an update is performed, otherwise the feature group is inserted. If no id is given or the id is all zeroes then no action is performed and a BadRequest (status 400) response is returned
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="parameters"> (optional)</param>
@@ -555,7 +555,7 @@ namespace IO.Swagger.Api
         }
 
         /// <summary>
-        /// Inserts or updates a feature group in the feature group library The id given is used to determine whether to perform an insert or an update, if the id already exists then an update is performed, otherwise the feature group is inserted
+        /// Inserts or updates a feature group in the feature group library The id given is used to determine whether to perform an insert or an update, if the id already exists then an update is performed, otherwise the feature group is inserted. If no id is given or the id is all zeroes then no action is performed and a BadRequest (status 400) response is returned
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="parameters"> (optional)</param>
@@ -567,7 +567,7 @@ namespace IO.Swagger.Api
         }
 
         /// <summary>
-        /// Inserts or updates a feature group in the feature group library The id given is used to determine whether to perform an insert or an update, if the id already exists then an update is performed, otherwise the feature group is inserted
+        /// Inserts or updates a feature group in the feature group library The id given is used to determine whether to perform an insert or an update, if the id already exists then an update is performed, otherwise the feature group is inserted. If no id is given or the id is all zeroes then no action is performed and a BadRequest (status 400) response is returned
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="parameters"> (optional)</param>
@@ -626,7 +626,7 @@ namespace IO.Swagger.Api
         }
 
         /// <summary>
-        /// Inserts or updates a feature group in the feature group library The id given is used to determine whether to perform an insert or an update, if the id already exists then an update is performed, otherwise the feature group is inserted
+        /// Inserts or updates a feature group in the feature group library The id given is used to determine whether to perform an insert or an update, if the id already exists then an update is performed, otherwise the feature group is inserted. If no id is given or the id is all zeroes then no action is performed and a BadRequest (status 400) response is returned
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="parameters"> (optional)</param>
@@ -639,7 +639,7 @@ namespace IO.Swagger.Api
         }
 
         /// <summary>
-        /// Inserts or updates a feature group in the feature group library The id given is used to determine whether to perform an insert or an update, if the id already exists then an update is performed, otherwise the feature group is inserted
+        /// Inserts or updates a feature group in the feature group library The id given is used to determine whether to perform an insert or an update, if the id already exists then an update is performed, otherwise the feature group is inserted. If no id is given or the id is all zeroes then no action is performed and a BadRequest (status 400) response is returned
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="parameters"> (optional)</param>

@@ -39,8 +39,7 @@ namespace IO.Swagger.Model
         /// Initializes a new instance of the <see cref="CreateDoorJobParameters" /> class.
         /// </summary>
         /// <param name="DoorJob">Feature group data used to create the new feature group in the library, id in door job is ignored (required).</param>
-        /// <param name="Dummy">Dummy (required).</param>
-        public CreateDoorJobParameters(DoorJob DoorJob = default(DoorJob), bool? Dummy = default(bool?))
+        public CreateDoorJobParameters(DoorJob DoorJob = default(DoorJob))
         {
             // to ensure "DoorJob" is required (not null)
             if (DoorJob == null)
@@ -50,15 +49,6 @@ namespace IO.Swagger.Model
             else
             {
                 this.DoorJob = DoorJob;
-            }
-            // to ensure "Dummy" is required (not null)
-            if (Dummy == null)
-            {
-                throw new InvalidDataException("Dummy is a required property for CreateDoorJobParameters and cannot be null");
-            }
-            else
-            {
-                this.Dummy = Dummy;
             }
         }
         
@@ -70,12 +60,6 @@ namespace IO.Swagger.Model
         public DoorJob DoorJob { get; set; }
 
         /// <summary>
-        /// Gets or Sets Dummy
-        /// </summary>
-        [DataMember(Name="Dummy", EmitDefaultValue=false)]
-        public bool? Dummy { get; set; }
-
-        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -84,7 +68,6 @@ namespace IO.Swagger.Model
             var sb = new StringBuilder();
             sb.Append("class CreateDoorJobParameters {\n");
             sb.Append("  DoorJob: ").Append(DoorJob).Append("\n");
-            sb.Append("  Dummy: ").Append(Dummy).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -123,11 +106,6 @@ namespace IO.Swagger.Model
                     this.DoorJob == input.DoorJob ||
                     (this.DoorJob != null &&
                     this.DoorJob.Equals(input.DoorJob))
-                ) && 
-                (
-                    this.Dummy == input.Dummy ||
-                    (this.Dummy != null &&
-                    this.Dummy.Equals(input.Dummy))
                 );
         }
 
@@ -142,8 +120,6 @@ namespace IO.Swagger.Model
                 int hashCode = 41;
                 if (this.DoorJob != null)
                     hashCode = hashCode * 59 + this.DoorJob.GetHashCode();
-                if (this.Dummy != null)
-                    hashCode = hashCode * 59 + this.Dummy.GetHashCode();
                 return hashCode;
             }
         }

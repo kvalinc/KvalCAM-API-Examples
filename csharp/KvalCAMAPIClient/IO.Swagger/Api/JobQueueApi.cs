@@ -49,7 +49,7 @@ namespace IO.Swagger.Api
         /// Uploads a new job directly to the KvalCAM queue
         /// </summary>
         /// <remarks>
-        /// 
+        /// Door job id given is ignored, use PUT /editor/doorjob to load an existing job from library
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="parameters"> (optional)</param>
@@ -60,7 +60,7 @@ namespace IO.Swagger.Api
         /// Uploads a new job directly to the KvalCAM queue
         /// </summary>
         /// <remarks>
-        /// 
+        /// Door job id given is ignored, use PUT /editor/doorjob to load an existing job from library
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="parameters"> (optional)</param>
@@ -93,7 +93,7 @@ namespace IO.Swagger.Api
         /// Uploads a new job directly to the KvalCAM queue
         /// </summary>
         /// <remarks>
-        /// 
+        /// Door job id given is ignored, use PUT /editor/doorjob to load an existing job from library
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="parameters"> (optional)</param>
@@ -104,7 +104,7 @@ namespace IO.Swagger.Api
         /// Uploads a new job directly to the KvalCAM queue
         /// </summary>
         /// <remarks>
-        /// 
+        /// Door job id given is ignored, use PUT /editor/doorjob to load an existing job from library
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="parameters"> (optional)</param>
@@ -352,7 +352,7 @@ namespace IO.Swagger.Api
         }
 
         /// <summary>
-        /// Uploads a new job directly to the KvalCAM queue 
+        /// Uploads a new job directly to the KvalCAM queue Door job id given is ignored, use PUT /editor/doorjob to load an existing job from library
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="parameters"> (optional)</param>
@@ -363,7 +363,7 @@ namespace IO.Swagger.Api
         }
 
         /// <summary>
-        /// Uploads a new job directly to the KvalCAM queue 
+        /// Uploads a new job directly to the KvalCAM queue Door job id given is ignored, use PUT /editor/doorjob to load an existing job from library
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="parameters"> (optional)</param>
@@ -422,7 +422,7 @@ namespace IO.Swagger.Api
         }
 
         /// <summary>
-        /// Uploads a new job directly to the KvalCAM queue 
+        /// Uploads a new job directly to the KvalCAM queue Door job id given is ignored, use PUT /editor/doorjob to load an existing job from library
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="parameters"> (optional)</param>
@@ -434,7 +434,7 @@ namespace IO.Swagger.Api
         }
 
         /// <summary>
-        /// Uploads a new job directly to the KvalCAM queue 
+        /// Uploads a new job directly to the KvalCAM queue Door job id given is ignored, use PUT /editor/doorjob to load an existing job from library
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="parameters"> (optional)</param>

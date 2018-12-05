@@ -49,7 +49,7 @@ namespace IO.Swagger.Api
         /// Uploads a new job into the KvalCAM editor
         /// </summary>
         /// <remarks>
-        /// 
+        /// Door job id given is ignored, use PUT /editor/doorjob to load an existing door job from library
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="parameters"> (optional)</param>
@@ -60,7 +60,7 @@ namespace IO.Swagger.Api
         /// Uploads a new job into the KvalCAM editor
         /// </summary>
         /// <remarks>
-        /// 
+        /// Door job id given is ignored, use PUT /editor/doorjob to load an existing door job from library
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="parameters"> (optional)</param>
@@ -91,7 +91,7 @@ namespace IO.Swagger.Api
         /// Uploads a new feature group into the KvalCAM editor
         /// </summary>
         /// <remarks>
-        /// 
+        /// Feature group id given is ignored, use PUT /editor/featuregroup to load an existing feature group from library
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="parameters"> (optional)</param>
@@ -102,7 +102,7 @@ namespace IO.Swagger.Api
         /// Uploads a new feature group into the KvalCAM editor
         /// </summary>
         /// <remarks>
-        /// 
+        /// Feature group id given is ignored, use PUT /editor/featuregroup to load an existing feature group from library
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="parameters"> (optional)</param>
@@ -135,7 +135,7 @@ namespace IO.Swagger.Api
         /// Uploads a new job into the KvalCAM editor
         /// </summary>
         /// <remarks>
-        /// 
+        /// Door job id given is ignored, use PUT /editor/doorjob to load an existing door job from library
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="parameters"> (optional)</param>
@@ -146,7 +146,7 @@ namespace IO.Swagger.Api
         /// Uploads a new job into the KvalCAM editor
         /// </summary>
         /// <remarks>
-        /// 
+        /// Door job id given is ignored, use PUT /editor/doorjob to load an existing door job from library
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="parameters"> (optional)</param>
@@ -177,7 +177,7 @@ namespace IO.Swagger.Api
         /// Uploads a new feature group into the KvalCAM editor
         /// </summary>
         /// <remarks>
-        /// 
+        /// Feature group id given is ignored, use PUT /editor/featuregroup to load an existing feature group from library
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="parameters"> (optional)</param>
@@ -188,7 +188,7 @@ namespace IO.Swagger.Api
         /// Uploads a new feature group into the KvalCAM editor
         /// </summary>
         /// <remarks>
-        /// 
+        /// Feature group id given is ignored, use PUT /editor/featuregroup to load an existing feature group from library
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="parameters"> (optional)</param>
@@ -436,7 +436,7 @@ namespace IO.Swagger.Api
         }
 
         /// <summary>
-        /// Uploads a new job into the KvalCAM editor 
+        /// Uploads a new job into the KvalCAM editor Door job id given is ignored, use PUT /editor/doorjob to load an existing door job from library
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="parameters"> (optional)</param>
@@ -447,7 +447,7 @@ namespace IO.Swagger.Api
         }
 
         /// <summary>
-        /// Uploads a new job into the KvalCAM editor 
+        /// Uploads a new job into the KvalCAM editor Door job id given is ignored, use PUT /editor/doorjob to load an existing door job from library
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="parameters"> (optional)</param>
@@ -506,7 +506,7 @@ namespace IO.Swagger.Api
         }
 
         /// <summary>
-        /// Uploads a new job into the KvalCAM editor 
+        /// Uploads a new job into the KvalCAM editor Door job id given is ignored, use PUT /editor/doorjob to load an existing door job from library
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="parameters"> (optional)</param>
@@ -518,7 +518,7 @@ namespace IO.Swagger.Api
         }
 
         /// <summary>
-        /// Uploads a new job into the KvalCAM editor 
+        /// Uploads a new job into the KvalCAM editor Door job id given is ignored, use PUT /editor/doorjob to load an existing door job from library
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="parameters"> (optional)</param>
@@ -718,7 +718,7 @@ namespace IO.Swagger.Api
         }
 
         /// <summary>
-        /// Uploads a new feature group into the KvalCAM editor 
+        /// Uploads a new feature group into the KvalCAM editor Feature group id given is ignored, use PUT /editor/featuregroup to load an existing feature group from library
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="parameters"> (optional)</param>
@@ -729,7 +729,7 @@ namespace IO.Swagger.Api
         }
 
         /// <summary>
-        /// Uploads a new feature group into the KvalCAM editor 
+        /// Uploads a new feature group into the KvalCAM editor Feature group id given is ignored, use PUT /editor/featuregroup to load an existing feature group from library
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="parameters"> (optional)</param>
@@ -788,7 +788,7 @@ namespace IO.Swagger.Api
         }
 
         /// <summary>
-        /// Uploads a new feature group into the KvalCAM editor 
+        /// Uploads a new feature group into the KvalCAM editor Feature group id given is ignored, use PUT /editor/featuregroup to load an existing feature group from library
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="parameters"> (optional)</param>
@@ -800,7 +800,7 @@ namespace IO.Swagger.Api
         }
 
         /// <summary>
-        /// Uploads a new feature group into the KvalCAM editor 
+        /// Uploads a new feature group into the KvalCAM editor Feature group id given is ignored, use PUT /editor/featuregroup to load an existing feature group from library
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="parameters"> (optional)</param>

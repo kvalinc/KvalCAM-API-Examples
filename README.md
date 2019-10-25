@@ -9,13 +9,7 @@ For getting started with the KvalCAM API go [here](https://docs.kvalinc.com/kval
 Once setup you can view up to date and interactive documentation by connecting to your KvalCAM host in a browser at http://{host_ip}:{port}/rest/api/docs
 
 ## .NET/CSharp Example
-The CSharp example is mostly code generated from the swagger doc schema and has samples of:
-* Loading a door job by name into the KvalCAM editor using the search function
-* Creating/editing a door job completely from code and loading it into the KvalCAM editor
-* Composing a door job from existing feature groups and loading it into the KvalCAM editor
-* Listening to a serial port COM channel to load a door job by name into the KvalCAM editor (serial port is commonly used by barcode and QR code readers)
-
-NOTE: The generated code in this example is updated over time to include new functionality/properties added to KvalCAM versions over time, see commit history for reference.
+The CSharp example shows some simple HTTP JSON requests to the API utilizing the HttpClient from .NET standard library System.NET.Http and JSON manipulation from the Newtonsoft.Json package.
 
 ## Python Example
 The python code shows some simple HTTP JSON requests to the API utilizing the python standard libraries.

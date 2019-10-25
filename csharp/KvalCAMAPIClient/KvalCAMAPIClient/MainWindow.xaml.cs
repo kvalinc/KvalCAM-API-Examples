@@ -1,6 +1,4 @@
-﻿using IO.Swagger.Api;
-using IO.Swagger.Client;
-using IO.Swagger.Model;
+﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO.Ports;
@@ -31,19 +29,15 @@ namespace KvalCAMAPIClient
             _serialPort.DataReceived += SerialPort_DataReceived;
         }
 
-        private void LoadNamedButton_Click(object sender, RoutedEventArgs e)
+        private async void LoadNamedButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 // Use the base path set for connecting using the API
-                var config = new Configuration { BasePath = BaseAddressTextBox.Text };
-
+                var api = new KvalCAMApi(BaseAddressTextBox.Text);
                 // Get the job
-                var result = GetDoorJobByName(JobNameTextBox.Text, config);
-
-                // Load the job into the editor
-                var editorApi = new EditorApi(config);
-                editorApi.RestApiV1EditorDoorjobPut(new LoadDoorJobIntoEditorParameters(Id: result.Id));
+                var result = await api.GetDoorJobByName(JobNameTextBox.Text);
+                await api.UploadDoorJobToEditor(result);
 
                 ResponseTextBox.Text = $"Success, loaded job: {JobNameTextBox.Text}";
             }
@@ -53,54 +47,41 @@ namespace KvalCAMAPIClient
             }
         }
 
-        private void LoadCodeCreatedJobButton_Click(object sender, RoutedEventArgs e)
+        private async void LoadCodeCreatedJobButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                // Use the base path set for connecting using the API
-                var config = new Configuration { BasePath = BaseAddressTextBox.Text };
-
                 // Creating a job purely from code
                 // NOTE: Any property not set will be left blank when loaded into KvalCAM
-
-                var job = new DoorJob
+                var job = new JObject
                 {
-                    Name = "Job1",
-                    Description = "This is a job from the API",
-                    DoorData = new DoorData(Length: "80", Width: "36", Thickness: "1.5"),
-                    FeatureGroups = new List<FeatureGroup>
-                    {
-                        new FeatureGroup
-                        {
-                            Name = "Group1",
-                            Locations = new List<LWTLocation>
-                            {
-                                new LWTLocation(LLocation: "36", WLocation: "0", TLocation: "0"),
-                                new LWTLocation(LLocation: "45", WLocation: "0", TLocation: "0"),
-                            },
+                    ["Name"] = "Job1",
+                    ["Description"] = "This is a job from the API",
+                    ["DoorData"] = JsonObjectFactory.CreateDoorData("80", "36", "1.75"),
 
-                            Children = new List<AbstractFeature>
+                    ["FeatureGroups"] = new JArray
+                    {
+                        new JObject
+                        {
+                            ["Name"] = "Group1",
+                            ["Locations"] = new JArray
                             {
-                                new Circle(
-                                    LLocation: "0",
-                                    WLocation: "0",
-                                    TLocation: "$door.thickness/2",
-                                    Bevel: "0",
-                                    Depth: "1",
-                                    Diameter: "3/4",
-                                    DiameterMinimum: "Diameter",
-                                    DiameterMaximum: "Diameter",
-                                    DepthMinimum: "Depth",
-                                    DepthMaximum: "Depth")
+                                JsonObjectFactory.CreateFeatureGroupLocation("36", "0", "0"),
+                                JsonObjectFactory.CreateFeatureGroupLocation("45", "0", "0")
+                            },
+                            ["Children"] = new JArray
+                            {
+                                JsonObjectFactory.CreateCircle("Circle1", "Lock", "0", "0", "$door.thickness/2", "3/4", "1"),
+                                JsonObjectFactory.CreateCircle("Circle2", "Lock", "3", "0", "$door.thickness/2", "1.25", "0.2")
                             }
                         }
                     }
                 };
 
+                // Use the base path set for connecting using the API
+                var api = new KvalCAMApi(BaseAddressTextBox.Text);
                 // Load the job into the editor
-                var editorApi = new EditorApi(config);
-                var parameters = new UploadDoorJobIntoEditorParameters(job);
-                editorApi.RestApiV1EditorDoorjobUploadPut(parameters);
+                await api.UploadDoorJobToEditor(job);
 
                 ResponseTextBox.Text = "Sucessfully loaded job created in code";
             }
@@ -111,51 +92,37 @@ namespace KvalCAMAPIClient
         }
 
         // Gets a feature group from the library by name using the search API call
-        private FeatureGroup GetFeatureGroupByName(string name, Configuration config)
+        private async Task<JObject> GetFeatureGroupByName(string name)
         {
-            var featureGroupsApi = new FeatureGroupsApi(config);
+            var api = new KvalCAMApi(BaseAddressTextBox.Text);
+            var result = await api.GetFeatureGroupByName(name);
 
-            var result = featureGroupsApi.RestApiV1FeaturegroupsSearchPost(new SearchFeatureGroupsParameters(Name: name));
-
-            if (result.Results == null || result.Results.Count == 0)
+            if (result == null)
             {
                 throw new Exception($"FeatureGroup with name \"{name}\" not found");
             }
 
-            if (result.Results.Count > 1)
-            {
-                throw new Exception($"Multiple feature groups with the name \"{name}\" were found");
-            }
-
-            return result.Results.First();
+            return result;
         }
 
         // Gets a door job from the library by name using the search API call
-        private DoorJob GetDoorJobByName(string name, Configuration config)
+        private async Task<JObject> GetDoorJobByName(string name)
         {
-            var doorJobsApi = new DoorJobsApi(config);
-            var result = doorJobsApi.RestApiV1DoorjobsSearchPost(new SearchDoorJobsParameters(Name: name));
+            var api = new KvalCAMApi(BaseAddressTextBox.Text);
+            var result = await api.GetDoorJobByName(name);
 
-            if (result.Results == null || result.Results.Count == 0)
+            if (result == null)
             {
                 throw new Exception($"DoorJob with name \"{name}\" not found");
             }
 
-            if (result.Results.Count > 1)
-            {
-                throw new Exception($"Multiple door jobs with the name \"{name}\" were found");
-            }
-
-            return result.Results.First();
+            return result;
         }
 
-        private void LoadComposedJobButton_Click(object sender, RoutedEventArgs e)
+        private async void LoadComposedJobButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                // Use the base path set for connecting using the API
-                var config = new Configuration { BasePath = BaseAddressTextBox.Text };
-
                 // Creating a job by querying existing feature groups and attaching them to an existing job
 
                 // This is the door job name to be attached to (must exist in the job library)
@@ -169,18 +136,21 @@ namespace KvalCAMAPIClient
                 };
 
                 // Get the job
-                var job = GetDoorJobByName(doorJobName, config);
+                var job = await GetDoorJobByName(doorJobName);
 
-                // Get the feature groups
-                var featureGroups = featureGroupNames.Select(name => GetFeatureGroupByName(name, config)).ToList();
+                var featureGroups = new JArray();
+                foreach (var fgName in featureGroupNames)
+                {
+                    var fg = await GetFeatureGroupByName(fgName);
+                    featureGroups.Add(fg);
+                }
 
                 // Set the feature groups on the job
-                job.FeatureGroups = featureGroups;
+                job["FeatureGroups"] = featureGroups;
 
                 // Load the composed job into the editor
-                var editorApi = new EditorApi(config);
-                var parameters = new UploadDoorJobIntoEditorParameters(job);
-                editorApi.RestApiV1EditorDoorjobUploadPut(parameters);
+                var api = new KvalCAMApi(BaseAddressTextBox.Text);
+                await api.UploadDoorJobToEditor(job);
 
                 var responseSb = new StringBuilder();
                 responseSb.AppendLine($"Sucessfully loaded job: {doorJobName} with the following feature groups attached:");
@@ -254,16 +224,14 @@ namespace KvalCAMAPIClient
             {
                 var input = _serialPort.ReadLine().Trim();
 
-                Dispatcher.BeginInvoke((Action)(() =>
+                Dispatcher.BeginInvoke((Action)(async () =>
                 {
                     try
                     {
-                        var config = new Configuration { BasePath = BaseAddressTextBox.Text };
-                        var job = GetDoorJobByName(input, config);
+                        var api = new KvalCAMApi(BaseAddressTextBox.Text);
+                        var job = await GetDoorJobByName(input);
 
-                        var editorApi = new EditorApi(config);
-                        var parameters = new UploadDoorJobIntoEditorParameters(job);
-                        editorApi.RestApiV1EditorDoorjobUploadPut(parameters);
+                        await api.UploadDoorJobToEditor(job);
 
                         ResponseTextBox.Text = $"Loaded job: {input} from serial port read";
                     }

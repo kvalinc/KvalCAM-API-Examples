@@ -9,8 +9,10 @@ port = 9707
 baseUrl = f'http://{ip}:{port}/rest/api/v1/'
 
 # Create a new sample job as json
+
+
 def create_job(id, name, description):
-	job_str = """
+    job_str = """
         {
           "Name": "Job",
           "Description": "",
@@ -115,67 +117,75 @@ def create_job(id, name, description):
             }
           ]
         }"""
-	job_json = json.loads(job_str)
-	job_json['Name'] = name
-	job_json['Id'] = id
-	job_json['Description'] = description
-	return job_json
+    job_json = json.loads(job_str)
+    job_json['Name'] = name
+    job_json['Id'] = id
+    job_json['Description'] = description
+    return job_json
+
 
 def print_json(json_data):
-	print(json.dumps(json_data, indent=2, separators=(',',':')))	
-	
+    print(json.dumps(json_data, indent=2, separators=(',', ':')))
+
+
 def create_upsert_job_request(job):
-    return { "DoorJob": job }
+    return {"DoorJob": job}
 
 # upsert a door job object to the library (inserts if id not found, updates if id matches existing job)
-def upsert_door_job(job):
-	url = baseUrl + 'doorjobs'
-	json_data = create_upsert_job_request(job)
-	with requests.session() as session:
-		r = session.put(url, json=json_data)
-		if r.status_code != 200:
-			raise Exception(f'Failed to upsert door job: {r.json()}')
-			
-# retrieve a door job object from the library by id or None if id not found
-def get_door_job_by_id(id):
-	url = baseUrl + 'doorjobs/search'
-	json_data = { 'Id': id }
-	with requests.session() as session:
-		r = session.post(url, json=json_data)
-		if r.status_code != 200:
-			raise Exception(f'Failed to get door job by id: {r.json()}')
-		
-		json_reply = r.json()
-		
-		if len(json_reply['Results']) > 0:
-			return json_reply['Results'][0]
-		else:
-			print(f'Job with id: {id} not found')
-			return None
 
-# get all the door job headers	
+
+def upsert_door_job(job):
+    url = baseUrl + 'doorjobs'
+    json_data = create_upsert_job_request(job)
+    with requests.session() as session:
+        r = session.put(url, json=json_data)
+        if r.status_code != 200:
+            raise Exception(f'Failed to upsert door job: {r.json()}')
+
+# retrieve a door job object from the library by id or None if id not found
+
+
+def get_door_job_by_id(id):
+    url = baseUrl + 'doorjobs/search'
+    json_data = {'Id': id}
+    with requests.session() as session:
+        r = session.post(url, json=json_data)
+        if r.status_code != 200:
+            raise Exception(f'Failed to get door job by id: {r.json()}')
+
+        json_reply = r.json()
+
+        if len(json_reply['Results']) > 0:
+            return json_reply['Results'][0]
+        else:
+            print(f'Job with id: {id} not found')
+            return None
+
+# get all the door job headers
+
+
 def get_door_job_headers():
-	url = baseUrl + 'doorjobs/headers'
-	with requests.session() as session:
-		return session.get(url).json()
-		
+    url = baseUrl + 'doorjobs/headers'
+    with requests.session() as session:
+        return session.get(url).json()
+
 
 # get all door jobs whose name contains the string given, percent ('%') and undescore ('_') characters must be escaped with backslash ('\')
 def jobs_with_name_containing(strInName):
-	url = baseUrl + 'doorjobs/search'
-	# using '%' wild card character for a contains search
-	json_data = { 'Name': '%' + strInName + '%' }
-	with requests.session() as session:
-		r = session.post(url, json=json_data)
-		if r.status_code != 200:
-			raise Exception(f'Failed to search for jobs with name containing a string: {r.json()}')
-		
-		json_reply = r.json()
-		return r.json()['Results']
+    url = baseUrl + 'doorjobs/search'
+    # using '%' wild card character for a contains search
+    json_data = {'Name': '%' + strInName + '%'}
+    with requests.session() as session:
+        r = session.post(url, json=json_data)
+        if r.status_code != 200:
+            raise Exception(
+                f'Failed to search for jobs with name containing a string: {r.json()}')
+
+        return r.json()['Results']
 
 
 job_id = str(uuid.uuid4())
-job = create_job(job_id, f'Python Job {job_id[:8]}', f'Job id: {job_id}')		
+job = create_job(job_id, f'Python Job {job_id[:8]}', f'Job id: {job_id}')
 print(f'Upserting door job with id: {job_id}')
 upsert_door_job(job)
 
